@@ -1,7 +1,7 @@
 #include <iostream>
 #include <chrono>
 #include <random>
-#include "functions.h"
+#include "../headers/functions.h"
 
 int main() {
     const int count = 100000000;
