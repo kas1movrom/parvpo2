@@ -32,3 +32,14 @@ image::../images/rtc.png[Файловая система]
 
 === Использование утилиты hwclock
 image::../images/hwclock.png[Клоки]
+
+. Типы часов, предоставляемых операционной системой
+** С
+... CLOCK_REALTIME
+... CLOCK_MONOTIC
+... CLOCK_BOOTTIME
+... CLOCK_PROCESS_CPUTIME
+** С++ (std::chrono)
+... system_clock
+... steady_clock
+... high_resolution_clock
