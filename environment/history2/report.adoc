@@ -78,3 +78,69 @@ image::../images/tsc.png[tsc]
 image::../images/model.png[proc]
 
 Тогда: один такт == 1 / 2.1e9, что примерно равно 0.476 нс
+
+== Таблица
+[cols=4]
+|====
+|*Имя таймера*
+|*Точность (по системному вызову) _нс_*
+|*Разрешение (экспериментально) _нс_*
+|*Погрешность разрешения (экспериментально) _нс_*
+
+|CLOCK_REALTIME
+|1 
+|74.1
+|6.3
+
+|CLOCK_MONOTONIC 
+|1
+|78.7
+|23.3
+
+|CLOCK_MONOTONIC_RAW 
+|1
+|80.1
+|24.9
+
+|CLOCK_BOOTTIME 
+|1
+|77.9
+|25.0
+
+|CLOCK_PROCESS_CPUTIME_ID
+|1
+|1005.5
+|886.0
+
+|CLOCK_THREAD_CPUTIME_ID
+|1
+|905.8
+|426.5
+
+|CLOCK_REALTIME_COARSE
+|1000000
+|1000006.9
+|0.3
+
+|CLOCK_MONOTONIC_COARSE
+|1000000
+|1000006.9
+|0.3
+
+|CLOCK_REALTIME_ALARM
+|1
+|203.2
+|29.6
+
+|CLOCK_TAI
+|1
+|22.2
+|2.9
+
+|CLOCK_BOOTTIME_ALARM
+|1
+|213.4
+|30.4
+|====
+
+== Диаграммы
