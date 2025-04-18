@@ -96,20 +96,30 @@ image::../images/fail.png[freq1]
 
 Почти в каждом треде (закрытом не позже 2014 года xD) "экспертами" было предложена следующая последовательность действий:
 
-> sudo aptitude install i2c-tools
-sudo modprobe eeprom
-sudo modprobe at24
-sudo modprobe i2c-i801
-sudo modprobe i2c-amd-mp2-pci
-sudo modprobe ee1004
-decode-dimms
+> sudo aptitude install i2c-tools ;
+sudo modprobe eeprom ;
+sudo modprobe at24 ;
+sudo modprobe i2c-i801 ;
+sudo modprobe i2c-amd-mp2-pci ;
+sudo modprobe ee1004 ;
+decode-dimms 
 
 Либо же, использование одной из следующих утилит:
 
-> dmidecode
-lshw
+> dmidecode,
+lshw,
 inxi
 
 Однако ни одна из представленных утилит не позволила мне узнать тайминги системы, а список команд, представоенных выше, выводит:
 
 image::../images/fail2.png[fail]
+
+*ОДНАКО* поресёрчив интернет, удалось найти, что в типичном случае типу DDR4-2400 соответствую значения CL16-16-16-39 (CL-tRCD-tRP-tRAS)
+
+=== Оценки времени выполнения функций оперативной памяти
+. _Расчёт длительности такта_: t(такста) = 1 / (базовая частота), где базовая частота = действительная / 2. То есть t(такта) = 1 / (1200 * 10^6) = *0.833 нс*
+. _Расчёт времени для каждого тайминга_
+.. _CAS Latency_ = 16 * t(такта) = *13.33 нс*
+.. _tRCD_ = 16 * t(такта) = *13.33 нс*
+.. _tRP_ = 16 * t(такта) = *13.33 нс*
+.. _tRAS_ = 39 * t(такста) = *32.49 нс*
