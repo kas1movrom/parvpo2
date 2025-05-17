@@ -1,0 +1,52 @@
+N0: box "Boss" fit at (5, 0)
+
+N1: box "Consigliere" fit at (3, -1)
+N2: box "Underboss" fit at (7, -1)
+
+N3: box "Capo 1" fit at (2, -2)
+N4: box "Capo 2" fit at (4, -2)
+N5: box "Capo 3" fit at (6, -2)
+N6: box "Capo 4" fit at (8, -2)
+
+N7: box "Soldier 1" fit at (1.5, -3)
+N8: box "Soldier 2" fit at (2.5, -3)
+N9: box "Soldier 3" fit at (3.5, -3)
+N10: box "Soldier 4" fit at (4.5, -3)
+N11: box "Soldier 5" fit at (5.5, -3)
+N12: box "Soldier 6" fit at (6.5, -3)
+N13: box "Soldier 7" fit at (7.5, -3)
+N14: box "Soldier 8" fit at (8.5, -3)
+
+N15: box "Associate" fit at (2, -4)
+N16: box "Associate" fit at (3, -4)
+N17: box "Associate" fit at (4, -4)
+N18: box "Associate" fit at (5, -4)
+N19: box "Associate" fit at (6, -4)
+N20: box "Associate" fit at (7, -4)
+
+arrow from N0.s to N1.n
+arrow from N0.s to N2.n
+
+arrow from N2.s to N3.n
+arrow from N2.s to N4.n
+arrow from N2.s to N5.n
+arrow from N2.s to N6.n
+
+arrow from N3.s to N7.n
+arrow from N3.s to N8.n
+
+arrow from N4.s to N9.n
+arrow from N4.s to N10.n
+
+arrow from N5.s to N11.n
+arrow from N5.s to N12.n
+
+arrow from N6.s to N13.n
+arrow from N6.s to N14.n
+
+arrow from N7.s to N15.n
+arrow from N8.s to N16.n
+arrow from N9.s to N17.n
+arrow from N10.s to N18.n
+arrow from N11.s to N19.n
+arrow from N12.s to N20.n
