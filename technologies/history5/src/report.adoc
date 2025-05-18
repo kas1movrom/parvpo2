@@ -56,7 +56,7 @@ arrow from N8.s to N13.n
 arrow from N8.s to N14.n
 ----
 
-image::../images/result.svg[third]
+image::../../images/result.svg[third]
 
 Текстовый файл (генерируемый программой)
 [source, c++]
