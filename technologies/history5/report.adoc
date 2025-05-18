@@ -15,8 +15,8 @@
 Предметная область: структура итало-американской https://ru.wikipedia.org/wiki/%D0%9C%D0%B0%D1%84%D0%B8%D1%8F[мафии] 
 
 С помощью команды
-
-++++
+[source, html]
+----
 <style>
   .hidden {
      position: absolute !important;
@@ -177,7 +177,7 @@ arrow from N11.s to N19.n
 arrow from N12.s to N20.n
 </pre>
 </div>
-++++
+----
 
 Текстовый файл (генерируемый программой)
 [source, c++]
