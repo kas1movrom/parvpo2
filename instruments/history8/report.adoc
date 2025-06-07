@@ -1,0 +1,152 @@
+= История №1: Цена вызова
+Выполнил работу: Касимов Роман Эльмирович, ст. гр. Б22-515
+
+== Описание и код тестового алгоритма
+
+=== Описание
+Алгоритм решает 1 миллион квадратных уравнений со случайными сгенерированными коэффициентами в диапазоне от -10 до 10 вклчюая
+
+=== Код алгоритма
+Код файла square.h
+[source, c++]
+----
+#pragma once
+#include <vector>
+
+struct QuadraticSolution {
+    double x1, x2;
+    int num_roots;
+};
+
+QuadraticSolution solve_quadratic(double a, double b, double c);
+void generate_coefficients(std::vector<double>& coeffs);
+----
+
+Код файла square.cpp
+[source, c++]
+----
+#include "square.h"
+#include <random>
+#include <cmath>
+
+QuadraticSolution solve_quadratic(double a, double b, double c) {
+    if (a == 0.0) {
+        if (b != 0.0) return {-c / b, 0.0, 1};
+        return {0.0, 0.0, (c == 0.0) ? -1 : 0};
+    }
+
+    double discriminant = b * b - 4 * a * c;
+    if (discriminant > 0.0) {
+        double sqrt_d = std::sqrt(discriminant);
+        return {(-b + sqrt_d) / (2 * a), (-b - sqrt_d) / (2 * a), 2};
+    } else if (discriminant == 0.0) {
+        return {-b / (2 * a), 0.0, 1};
+    }
+    return {0.0, 0.0, 0};
+}
+
+void generate_coefficients(std::vector<double>& coeffs) {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::uniform_real_distribution<double> dist(-10.0, 10.0);
+    for (auto& coef : coeffs) {
+        coef = dist(gen);
+    }
+}
+----
+
+Код файла main.cpp
+[source, c++]
+----
+#include "square.h"
+#include <iostream>
+#include <chrono>
+
+int main() {
+    const size_t NUM_EQUATIONS = 1'000'000;
+    std::vector<double> coefficients(NUM_EQUATIONS * 3);
+    generate_coefficients(coefficients);
+
+    auto start = std::chrono::high_resolution_clock::now();
+    size_t total_roots = 0;
+    for (size_t i = 0; i < NUM_EQUATIONS; ++i) {
+        auto sol = solve_quadratic(coefficients[3*i], coefficients[3*i+1], coefficients[3*i+2]);
+        total_roots += (sol.num_roots > 0) ? sol.num_roots : 0;
+    }
+    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(
+        std::chrono::high_resolution_clock::now() - start
+    ).count();
+
+    std::cout << "Solved " << NUM_EQUATIONS << " equations in " << duration << " ms\n";
+    return 0;
+}
+----
+
+== Таблицы с результатами
+Таблица сборки без LTO
+[cols = 4]
+|====
+|Флаг оптимизации
+|Время сборки, с
+|Время выполнения, с
+|Размер исполняемого файла, байт
+
+|Oz
+|1.775
+|0.011
+|24832
+
+|O2
+|1.663
+|0.010
+|17840
+|====
+
+Таблица сборки c LTO=thin
+[cols = 4]
+|====
+|Флаг оптимизации
+|Время сборки, с
+|Время выполнения, с
+|Размер исполняемого файла, байт
+
+|Oz
+|1.664
+|0.011
+|19560
+
+|O2
+|1.791
+|0.000000181
+|17656
+|====
+
+Таблица сборки c LTO=full
+[cols = 4]
+|====
+|Флаг оптимизации
+|Время сборки, с
+|Время выполнения, с
+|Размер исполняемого файла, байт
+
+|Oz
+|1.720
+|0.009
+|17584
+
+|Os
+|1.765
+|0.008
+|17400
+|====
+
+== Выводы
+В результате выполнения лабораторной работы были изучены и применены на практике такие флаги оптимизации компоновщика, как thin LTO и full LTO.
+
+По полученной таблице эксперимента можно сделать вывод, что в целом время выполнения программы уменьшается с повышением агресси уровня оптимизации. 
+
+При этом видно увеличение размера исполняемого файла при флаге компиляции Oz по сравнению с флагом O2.
+
+Время сборки файлов примерно одинаково и находяится в промежутке между 1.663 (у O2 без LTO) и 1.791 (у O2 с LTO thin)
+
+Также был выделен *интересный случай*. В рамках запуска с флагами O2 и thin программа выполнялась в среднем всего 181 наносекунду, что примерно в 10000 раз быстрее, чем при любом другом способе сборки. В рамках попытки выяснить причину код был исправлен и выводил коэффициенты всех сгенерированных 1000000 уравнений (была поставлена гипотеза, что компилятор просто убил код решения уравнений). Однако код также как и при остальных способах сборки выводил коэффициенты. Предпологаю, что это может быть связано с аппаратными особенностями системы или версией компилятора clang. 
