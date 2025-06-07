@@ -1,0 +1,131 @@
+= История №1: Цена вызова
+Выполнил работу: Касимов Роман Эльмирович, ст. гр. Б22-515
+
+== Описание и код тестового алгоритма
+
+=== Описание
+Алгоритм решает 1 миллион квадратных уравнений со случайными сгенерированными коэффициентами в диапазоне от -10 до 10 вклчюая
+
+=== Код алгоритма
+[source, c]
+----
+#include <stdio.h>
+#include <stdlib.h>
+#include <math.h>
+#include <time.h>
+
+typedef struct {
+    double a, b, c;
+    double x1, x2;
+    int solutions;
+} QuadraticEquation;
+
+void solve_quadratic(QuadraticEquation *eq) {
+    double a = eq->a, b = eq->b, c = eq->c;
+    double discriminant = b * b - 4 * a * c;
+
+    if (a == 0) {
+        if (b != 0) {
+            eq->solutions = 1;
+            eq->x1 = -c / b;
+        } else {
+            eq->solutions = (c == 0) ? -1 : 0;
+        }
+        return;
+    }
+
+    if (discriminant > 0) {
+        eq->solutions = 2;
+        double sqrt_discriminant = sqrt(discriminant);
+        eq->x1 = (-b + sqrt_discriminant) / (2 * a);
+        eq->x2 = (-b - sqrt_discriminant) / (2 * a);
+    } else if (discriminant == 0) {
+        eq->solutions = 1;
+        eq->x1 = -b / (2 * a);
+    } else {
+        eq->solutions = 0;
+    }
+}
+
+void generate_random_equations(QuadraticEquation *equations, int count) {
+    for (int i = 0; i < count; i++) {
+        equations[i].a = (rand() % 2000 - 1000) / 100.0;
+        equations[i].b = (rand() % 2000 - 1000) / 100.0;
+        equations[i].c = (rand() % 2000 - 1000) / 100.0;
+    }
+}
+
+int main() {
+    const int NUM_EQUATIONS = 1000000;
+    QuadraticEquation *equations = malloc(NUM_EQUATIONS * sizeof(QuadraticEquation));
+    
+    srand(time(NULL));
+    
+    generate_random_equations(equations, NUM_EQUATIONS);
+    
+    clock_t start = clock();
+    
+    for (int i = 0; i < NUM_EQUATIONS; i++) {
+        solve_quadratic(&equations[i]);
+    }
+    
+    clock_t end = clock();
+    double time_spent = (double)(end - start) / CLOCKS_PER_SEC;
+    
+    printf("%d equations in %.3f seconds\n", NUM_EQUATIONS, time_spent);
+    
+    free(equations);
+    return 0;
+}
+----
+
+== Таблица с результатами
+[cols = 4]
+|====
+|Флаг оптимизации
+|Время сборки, с
+|Время выполнения, с
+|Размер исполняемого файла, байт
+
+|O0
+|0.302
+|0.025
+|16328
+
+|Og
+|0.298
+|0.017
+|16336
+
+|O1
+|0.315
+|0.014
+|16296
+
+|O2
+|0.309
+|0.015
+|16296
+
+|O3
+|0.418
+|0.013
+|16296
+
+|Ofast
+|0.438
+|0.012
+|17832
+
+|Os
+|0.312
+|0.022
+|16336
+|====
+
+== Выводы
+В результате выполнения лабораторной работы были изучены и применены на практике такие флаги оптимизации компилятора, как O0, Og, O1, O2, O3, Ofast и Os.
+
+По полученной таблице эксперимента можно сделать вывод, что время сборки программы увеличивается с ростом оптимизации, при этом оптимизации также дают и прирост производительности.
+
+Наибольший скачок производительности наблюдается между O0 и Og (примерно на 25% быстрее). Наибольшим размером бинарного файла обладает код при оптимизации Ofast.

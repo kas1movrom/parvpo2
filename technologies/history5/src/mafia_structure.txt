@@ -1,0 +1,40 @@
+├───Boss
+│   ├───Consigliere
+│   └───Underboss
+│       ├───Capo1
+|       |   ├───Soldier1
+|       |   |    Asocciate
+│       |   ├───Soldier1
+|       |   ├───Soldier2
+|       |   |    Asocciate
+│       |   ├───Soldier2
+|       |   |    Asocciate
+|       |   └───Soldier3
+|       |        Asocciate
+│       ├───Capo2
+|       |   ├───Soldier1
+|       |        Asocciate
+│       |   └───Soldier1
+|       |   ├───Soldier2
+│       |   └───Soldier2
+|       |   └───Soldier3
+|       |        Asocciate
+│       ├───Capo3
+|       |   ├───Soldier1
+|       |        Asocciate
+│       |   └───Soldier1
+|       |   ├───Soldier2
+|       |        Asocciate
+│       |   └───Soldier2
+|       |            Asocciate
+|       |   └───Soldier3
+│       └───Capo4
+|           ├───Soldier1
+│           └───Soldier1
+|                    Asocciate
+|           ├───Soldier2
+|                Asocciate
+│           └───Soldier2
+|           └───Soldier3
+|                Asocciate
+│           └───Soldier3
